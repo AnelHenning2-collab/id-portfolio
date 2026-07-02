@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Internal Controls &amp; Audit Basics</title>
+<link rel="stylesheet" href="../shared/style.css">
+</head>
+<body>
+<div class="module">
+  <div class="header"><h1>Internal Controls &amp; Audit Basics</h1></div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:16%"></div></div>
+
+  <div class="screen active" data-screen="1">
+    <h2>Welcome to the Team</h2>
+    <p class="lead">In your first week, you'll hear words like <em>"control,"</em> <em>"evidence,"</em> and <em>"finding"</em> a lot.</p>
+    <p class="lead">Let's make sure they actually mean something to you by Friday.</p>
+    <div class="btn-row"><button onclick="goTo(2)">Let's go</button></div>
+  </div>
+
+  <div class="screen" data-screen="2">
+    <h2>What's a Control?</h2>
+    <p class="lead">A control is just a safeguard — a rule or process that prevents or catches a problem.</p>
+    <p class="lead"><strong>Example:</strong> when someone leaves the company, IT is supposed to shut off their system access within 24 hours. That rule is a control.</p>
+    <div class="btn-row"><button onclick="goTo(3)">Next</button></div>
+  </div>
+
+  <div class="screen" data-screen="3">
+    <h2>The Audit Cycle</h2>
+    <p class="lead">Auditing that control means walking through 4 steps. Tap each to see what happens, using our example.</p>
+    <div class="card-grid" id="cycleGrid">
+      <div class="reveal-card"><strong>1. Control Identified</strong><div class="detail">"Terminated employees lose access within 24 hours" is written down as a control to test.</div></div>
+      <div class="reveal-card"><strong>2. Evidence Requested</strong><div class="detail">Ask IT for a system log showing exactly when access was removed for recent terminations.</div></div>
+      <div class="reveal-card"><strong>3. Evidence Reviewed</strong><div class="detail">Compare the termination date to the access-removal timestamp for each case.</div></div>
+      <div class="reveal-card"><strong>4. Finding Documented</strong><div class="detail">Write down whether the control worked every time, or note the cases where it didn't.</div></div>
+    </div>
+    <p class="note" id="cycleNote">Tap all four steps to continue.</p>
+    <div class="btn-row"><button id="toScreen4" onclick="goTo(4)" disabled>Next</button></div>
+  </div>
+
+  <div class="screen" data-screen="4">
+    <h2>Findings vs. Recommendations</h2>
+    <div class="card-grid">
+      <div class="reveal-card revealed" style="cursor:default;"><strong>Finding</strong><div class="detail" style="display:block;">What the evidence actually showed. Example: "3 of 20 terminated employees kept access for more than 24 hours."</div></div>
+      <div class="reveal-card revealed" style="cursor:default;"><strong>Recommendation</strong><div class="detail" style="display:block;">What you suggest to fix it. Example: "Automate access removal instead of relying on a manual step."</div></div>
+    </div>
+    <p class="note">They're not the same thing — a finding is a fact, a recommendation is a suggestion.</p>
+    <div class="btn-row"><button onclick="goTo(5)">Knowledge Check</button></div>
+  </div>
+
+  <div class="screen" data-screen="5">
+    <h2>Knowledge Check</h2>
+    <p class="lead">You're checking whether terminated employees lose access within 24 hours. Which of these counts as acceptable evidence?</p>
+    <div class="quiz-options" id="quizOptions">
+      <button class="quiz-option">A manager's verbal confirmation that "it's handled"</button>
+      <button class="quiz-option">A system log showing the exact access-removal timestamp</button>
+      <button class="quiz-option">An email saying "we're on top of it"</button>
+    </div>
+    <div class="feedback" id="quizFeedback"></div>
+    <div class="btn-row"><button id="toScreen6" onclick="goTo(6)" style="display:none;">Finish</button></div>
+  </div>
+
+  <div class="screen" data-screen="6">
+    <div class="completion-icon">✅</div>
+    <h2 style="text-align:center;">Module Complete</h2>
+    <p class="lead" style="text-align:center;">You now know the basic audit cycle and what counts as real evidence.</p>
+    <p class="lead" style="text-align:center;"><strong>Was this useful?</strong></p>
+    <div class="btn-row" style="justify-content:center;">
+      <button onclick="showThankYou('This module is a portfolio sample built by Anel Henning.')">Yes</button>
+      <button class="secondary" onclick="showThankYou('This module is a portfolio sample built by Anel Henning.')">No</button>
+    </div>
+  </div>
+</div>
+
+<script src="../shared/module.js"></script>
+<script>
+  makeCardTracker('#cycleGrid', 4, 'toScreen4', '#cycleNote', 'All four steps reviewed — nice work.');
+  makeQuiz('#quizOptions .quiz-option', {
+    correctIndex: 1,
+    feedbackId: 'quizFeedback',
+    nextBtnId: 'toScreen6',
+    correctFeedback: '<strong>Correct.</strong> A timestamped system log is verifiable — anyone can check it independently. Verbal confirmations and vague emails can\'t be verified, so auditors can\'t rely on them as evidence.',
+    incorrectFeedback: '<strong>Not quite.</strong> Only the system log with an exact timestamp is verifiable evidence. Verbal or vague confirmations can\'t be independently checked, so they don\'t count as audit evidence.'
+  });
+</script>
+</body>
+</html>

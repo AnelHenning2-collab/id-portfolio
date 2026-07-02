@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phishing Awareness Refresher</title>
+<link rel="stylesheet" href="../shared/style.css">
+<style>
+  .mock-email {
+    background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 16px;
+    font-size: 0.88rem; margin-top: 16px; text-align: left;
+  }
+  .mock-email .field { color: #555; margin-bottom: 4px; }
+  .mock-email .hotspot {
+    cursor: pointer; border-bottom: 2px dashed var(--accent); padding: 1px 2px;
+  }
+  .mock-email .hotspot.found { background: #FFF3E0; border-bottom-color: var(--correct); }
+  .mock-email .hotspot .why { display: none; font-size: 0.8rem; color: var(--incorrect); margin-top: 4px; }
+  .mock-email .hotspot.found .why { display: block; }
+</style>
+</head>
+<body>
+<div class="module">
+  <div class="header"><h1>Phishing Awareness Refresher</h1></div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:33%"></div></div>
+
+  <div class="screen active" data-screen="1">
+    <h2>Spot the Red Flags</h2>
+    <p class="lead">This email looks real. Tap the two things that give it away.</p>
+    <div class="mock-email">
+      <div class="field">From: <span class="hotspot" id="hotspot1">IT-Support@yourcompanny.com<div class="why">Misspelled domain ("compannny") — a classic impersonation trick.</div></span></div>
+      <div class="field">Subject: Account Verification Required</div>
+      <hr style="border:none; border-top:1px solid #eee;">
+      <p><span class="hotspot" id="hotspot2">Your access will be suspended in 1 hour unless you verify immediately.<div class="why">Urgent, high-pressure language designed to make you act before thinking.</div></span> Click here to verify your password.</p>
+    </div>
+    <p class="note" id="hotspotNote">Tap both red flags to continue.</p>
+    <div class="btn-row"><button id="toScreen2" onclick="goTo(2)" disabled>Next</button></div>
+  </div>
+
+  <div class="screen" data-screen="2">
+    <h2>What To Do</h2>
+    <p class="lead" style="font-size:1.2rem; text-align:center; padding:20px 0;">If anything feels off — even a little — <strong>don't click. Report it to IT instead.</strong></p>
+    <div class="btn-row"><button onclick="goTo(3)">Next</button></div>
+  </div>
+
+  <div class="screen" data-screen="3">
+    <h2>Quick Check</h2>
+    <p class="lead">You get an urgent email asking you to click a link and "verify" your login. What do you do?</p>
+    <div class="quiz-options" id="quizOptions">
+      <button class="quiz-option">Click the link quickly before access is suspended</button>
+      <button class="quiz-option">Don't click — report it to IT instead</button>
+      <button class="quiz-option">Reply asking if it's real</button>
+    </div>
+    <div class="feedback" id="quizFeedback"></div>
+    <div class="btn-row"><button id="toScreen4" onclick="goTo(4)" style="display:none;">Finish</button></div>
+  </div>
+
+  <div class="screen" data-screen="4">
+    <div class="completion-icon">✅</div>
+    <h2 style="text-align:center;">Done — that's it.</h2>
+    <p class="lead" style="text-align:center;">Three screens, one habit: don't click, report instead.</p>
+  </div>
+</div>
+
+<script src="../shared/module.js"></script>
+<script>
+  let foundHotspots = 0;
+  document.querySelectorAll('.hotspot').forEach(h => {
+    h.addEventListener('click', () => {
+      if (!h.classList.contains('found')) {
+        h.classList.add('found');
+        foundHotspots++;
+        if (foundHotspots >= 2) {
+          document.getElementById('toScreen2').disabled = false;
+          document.getElementById('hotspotNote').textContent = 'Both red flags found — nice catch.';
+        }
+      }
+    });
+  });
+
+  makeQuiz('#quizOptions .quiz-option', {
+    correctIndex: 1,
+    feedbackId: 'quizFeedback',
+    nextBtnId: 'toScreen4',
+    correctFeedback: '<strong>Correct.</strong> Reporting it to IT lets them warn others and block the sender — clicking or replying both carry risk.',
+    incorrectFeedback: '<strong>Not quite.</strong> The safest move is always to not click and report it to IT — even replying to a phishing email confirms your address is active.'
+  });
+</script>
+</body>
+</html>

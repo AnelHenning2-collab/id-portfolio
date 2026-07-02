@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NIST Cybersecurity Framework Basics</title>
+<link rel="stylesheet" href="../shared/style.css">
+</head>
+<body>
+<div class="module">
+  <div class="header"><h1>NIST Cybersecurity Framework Basics</h1></div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:16%"></div></div>
+
+  <div class="screen active" data-screen="1">
+    <h2>Quick Question</h2>
+    <p class="lead">Your department gets a new laptop-tracking spreadsheet, a phishing test, and an incident report template this quarter — all part of the same framework.</p>
+    <p class="lead"><strong>Which one is it part of?</strong></p>
+    <div class="btn-row"><button onclick="goTo(2)">Let's find out</button></div>
+  </div>
+
+  <div class="screen" data-screen="2">
+    <h2>The Five Functions</h2>
+    <p class="lead">The NIST Cybersecurity Framework organizes everything into five functions. Tap each to see its plain-language meaning.</p>
+    <div class="card-grid" id="functionGrid">
+      <div class="reveal-card"><span class="icon">🔍</span><strong>Identify</strong><div class="detail">Know what devices, data, and systems you have.</div></div>
+      <div class="reveal-card"><span class="icon">🛡️</span><strong>Protect</strong><div class="detail">Put safeguards in place before something goes wrong.</div></div>
+      <div class="reveal-card"><span class="icon">👀</span><strong>Detect</strong><div class="detail">Notice when something unusual is happening.</div></div>
+      <div class="reveal-card"><span class="icon">🚨</span><strong>Respond</strong><div class="detail">Take action right away when a problem is found.</div></div>
+      <div class="reveal-card"><span class="icon">🔄</span><strong>Recover</strong><div class="detail">Get back to normal and learn from what happened.</div></div>
+    </div>
+    <p class="note" id="functionNote">Tap all five to continue.</p>
+    <div class="btn-row"><button id="toScreen3" onclick="goTo(3)" disabled>Next</button></div>
+  </div>
+
+  <div class="screen" data-screen="3">
+    <h2>Match the Scenario</h2>
+    <p class="lead">Each of these belongs to one function — and your department is involved, not just IT. Tap a scenario to see which one.</p>
+    <div class="card-grid" id="scenarioGrid">
+      <div class="reveal-card"><strong>📋 Laptop inventory list</strong><div class="detail"><strong>Identify.</strong> You can't protect what you don't know you have.</div></div>
+      <div class="reveal-card"><strong>🔒 Locking a shared drive</strong><div class="detail"><strong>Protect.</strong> A safeguard put in place ahead of time.</div></div>
+      <div class="reveal-card"><strong>⚠️ A strange login alert</strong><div class="detail"><strong>Detect.</strong> Noticing something unusual is happening.</div></div>
+      <div class="reveal-card"><strong>📞 Reporting a lost device</strong><div class="detail"><strong>Respond.</strong> Taking action right away.</div></div>
+    </div>
+    <p class="note" id="scenarioNote">Tap all four to continue.</p>
+    <div class="btn-row"><button id="toScreen4" onclick="goTo(4)" disabled>Next</button></div>
+  </div>
+
+  <div class="screen" data-screen="4">
+    <h2>Recap</h2>
+    <div class="steps">
+      <li>Identify what you have</li>
+      <li>Protect it</li>
+      <li>Detect problems</li>
+      <li>Respond when they happen</li>
+      <li>Recover afterward</li>
+    </div>
+    <div class="btn-row"><button onclick="goTo(5)">Knowledge Check</button></div>
+  </div>
+
+  <div class="screen" data-screen="5">
+    <h2>Knowledge Check</h2>
+    <p class="lead">An employee reports their laptop was stolen from their car. Which function does <em>reporting it right away</em> belong to?</p>
+    <div class="quiz-options" id="quizOptions">
+      <button class="quiz-option">Identify</button>
+      <button class="quiz-option">Respond</button>
+      <button class="quiz-option">Recover</button>
+    </div>
+    <div class="feedback" id="quizFeedback"></div>
+    <div class="btn-row"><button id="toScreen6" onclick="goTo(6)" style="display:none;">Finish</button></div>
+  </div>
+
+  <div class="screen" data-screen="6">
+    <div class="completion-icon">✅</div>
+    <h2 style="text-align:center;">Module Complete</h2>
+    <p class="lead" style="text-align:center;">You can now recognize the five NIST CSF functions and see where your role fits in.</p>
+    <p class="lead" style="text-align:center;"><strong>Was this useful?</strong></p>
+    <div class="btn-row" style="justify-content:center;">
+      <button onclick="showThankYou('This module is a portfolio sample built by Anel Henning.')">Yes</button>
+      <button class="secondary" onclick="showThankYou('This module is a portfolio sample built by Anel Henning.')">No</button>
+    </div>
+  </div>
+</div>
+
+<script src="../shared/module.js"></script>
+<script>
+  makeCardTracker('#functionGrid', 5, 'toScreen3', '#functionNote', 'All five functions reviewed — nice work.');
+  makeCardTracker('#scenarioGrid', 4, 'toScreen4', '#scenarioNote', 'All scenarios matched — nice work.');
+  makeQuiz('#quizOptions .quiz-option', {
+    correctIndex: 1,
+    feedbackId: 'quizFeedback',
+    nextBtnId: 'toScreen6',
+    correctFeedback: '<strong>Correct.</strong> Reporting it immediately is the <strong>Respond</strong> function — taking action right away. Recovery (getting a new device set up, restoring data) comes after.',
+    incorrectFeedback: '<strong>Not quite.</strong> Reporting it immediately is the <strong>Respond</strong> function — taking action right away, before recovery steps begin.'
+  });
+</script>
+</body>
+</html>

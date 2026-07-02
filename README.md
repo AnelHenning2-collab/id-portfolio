@@ -14,11 +14,20 @@ An interactive lesson with a live calculator, translating digital marketing fund
 
 **[View live module →](https://anelhenning2-collab.github.io/id-portfolio/02-cac-ltv-fundamentals/module.html)**
 
-### 3. [NIST Cybersecurity Framework Basics for Non-IT Staff](./03-nist-csf-basics/) *(case study drafted, interactive build in progress)*
+### 3. [NIST Cybersecurity Framework Basics for Non-IT Staff](./03-nist-csf-basics/)
 A plain-language primer on the five NIST CSF functions for non-technical managers, grounded in real NIST CSF documentation work.
 
-### 4. Internal Controls & Audit Basics *(planned)*
-### 5. Phishing & Social Engineering Awareness Microlearning *(planned)*
+**[View live module →](https://anelhenning2-collab.github.io/id-portfolio/03-nist-csf-basics/module.html)**
+
+### 4. [Internal Controls & Audit Basics — New Hire Onboarding](./04-internal-controls-onboarding/)
+An onboarding module that teaches new GRC/audit team members the basic audit cycle (control → evidence → review → finding) using one running example throughout.
+
+**[View live module →](https://anelhenning2-collab.github.io/id-portfolio/04-internal-controls-onboarding/module.html)**
+
+### 5. [Phishing & Social Engineering Awareness — Microlearning Refresher](./05-phishing-microlearning/)
+A true microlearning piece — 3 screens, under 3 minutes — demonstrating design for minimal attention span rather than a trimmed-down long module.
+
+**[View live module →](https://anelhenning2-collab.github.io/id-portfolio/05-phishing-microlearning/module.html)**
 
 ---
 
