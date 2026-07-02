@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HIPAA Security Awareness Training</title>
+<style>
+  :root {
+    --primary: #0B5D6E;
+    --primary-light: #E8F4F6;
+    --accent: #C8862B;
+    --correct: #2E7D32;
+    --incorrect: #C62828;
+    --text: #222;
+    --bg: #FAFAFA;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    padding: 24px 16px;
+  }
+  .module {
+    background: #fff;
+    max-width: 640px;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    overflow: hidden;
+  }
+  .header {
+    background: var(--primary);
+    color: #fff;
+    padding: 18px 28px;
+  }
+  .header h1 { margin: 0; font-size: 1.15rem; font-weight: 600; }
+  .progress-bar {
+    height: 5px;
+    background: rgba(255,255,255,0.25);
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.4s ease;
+  }
+  .screen { padding: 32px 28px; display: none; }
+  .screen.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  h2 { color: var(--primary); font-size: 1.3rem; margin-top: 0; }
+  p.lead { font-size: 1.05rem; line-height: 1.55; }
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+  button {
+    font-family: inherit;
+    font-size: 0.95rem;
+    padding: 11px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: var(--primary);
+    color: #fff;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+  button:hover { background: #084b59; transform: translateY(-1px); }
+  button.secondary { background: #eee; color: var(--text); }
+  button.secondary:hover { background: #ddd; }
+  button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+  .safeguard-row { display: flex; gap: 14px; margin-top: 20px; flex-wrap: wrap; }
+  .safeguard-card {
+    flex: 1; min-width: 150px;
+    background: var(--primary-light);
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 16px;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.15s ease;
+  }
+  .safeguard-card.revealed { border-color: var(--primary); }
+  .safeguard-card .icon { font-size: 1.8rem; margin-bottom: 6px; }
+  .safeguard-card .example {
+    display: none; font-size: 0.85rem; margin-top: 8px; color: #444; text-align: left;
+  }
+  .safeguard-card.revealed .example { display: block; }
+  .scenario-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+  @media (max-width: 480px) { .scenario-grid { grid-template-columns: 1fr; } }
+  .scenario-card {
+    background: #fff8f0; border: 2px solid #eee; border-radius: 10px;
+    padding: 14px; cursor: pointer; font-size: 0.9rem;
+  }
+  .scenario-card.revealed { border-color: var(--accent); background: #FFF3E0; }
+  .scenario-card .why { display: none; margin-top: 8px; font-size: 0.85rem; color: #555; }
+  .scenario-card.revealed .why { display: block; }
+  .steps { list-style: none; padding: 0; counter-reset: step; margin-top: 20px; }
+  .steps li {
+    counter-increment: step;
+    padding: 14px 14px 14px 50px;
+    position: relative;
+    background: var(--primary-light);
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  .steps li::before {
+    content: counter(step);
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    background: var(--primary); color: #fff;
+    width: 26px; height: 26px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;
+  }
+  .quiz-options { margin-top: 18px; display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option {
+    text-align: left; background: #f5f5f5; color: var(--text);
+    border: 2px solid #e0e0e0; padding: 13px 16px;
+  }
+  .quiz-option:hover { background: #ececec; }
+  .quiz-option.correct { background: #E8F5E9; border-color: var(--correct); color: var(--correct); font-weight: 600; }
+  .quiz-option.incorrect { background: #FFEBEE; border-color: var(--incorrect); color: var(--incorrect); }
+  .feedback {
+    margin-top: 16px; padding: 14px 16px; border-radius: 8px;
+    background: var(--primary-light); font-size: 0.92rem; display: none;
+  }
+  .feedback.show { display: block; }
+  .note {
+    margin-top: 14px; font-size: 0.85rem; color: #777; font-style: italic;
+  }
+  .completion-icon { font-size: 3rem; text-align: center; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+<div class="module">
+  <div class="header">
+    <h1>HIPAA Security Awareness Training</h1>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:20%"></div></div>
+
+  <!-- Screen 1: Hook -->
+  <div class="screen active" data-screen="1">
+    <h2>Quick Question</h2>
+    <p class="lead">It's 4:45pm. A patient's chart is still open on the front-desk monitor while you help someone check out.</p>
+    <p class="lead"><strong>Is that a problem?</strong></p>
+    <div class="btn-row">
+      <button onclick="goTo(2)">Yes</button>
+      <button onclick="goTo(2)">No</button>
+      <button class="secondary" onclick="goTo(2)">Not sure</button>
+    </div>
+  </div>
+
+  <!-- Screen 2: Three Safeguards -->
+  <div class="screen" data-screen="2">
+    <h2>The Three Safeguards</h2>
+    <p class="lead">HIPAA requires three types of safeguards to protect patient information. Tap each one to see a real example — that front-desk scenario was a <strong>Physical Safeguard</strong> issue.</p>
+    <div class="safeguard-row">
+      <div class="safeguard-card" onclick="this.classList.toggle('revealed')">
+        <div class="icon">📋</div>
+        <strong>Administrative</strong>
+        <div class="example">Policies, training, and designating a Privacy Officer.</div>
+      </div>
+      <div class="safeguard-card" onclick="this.classList.toggle('revealed')">
+        <div class="icon">🔒</div>
+        <strong>Physical</strong>
+        <div class="example">Locked file rooms, privacy screens, locking your workstation when you step away.</div>
+      </div>
+      <div class="safeguard-card" onclick="this.classList.toggle('revealed')">
+        <div class="icon">💻</div>
+        <strong>Technical</strong>
+        <div class="example">Passwords, encryption, automatic screen lock timers.</div>
+      </div>
+    </div>
+    <div class="btn-row"><button onclick="goTo(3)">Next</button></div>
+  </div>
+
+  <!-- Screen 3: Risk Scenarios -->
+  <div class="screen" data-screen="3">
+    <h2>Everyday Risk Scenarios</h2>
+    <p class="lead">These four situations happen in almost every practice. Tap each card to see why it's a risk.</p>
+    <div class="scenario-grid" id="scenarioGrid">
+      <div class="scenario-card" onclick="revealScenario(this)">
+        <strong>🖥️ Unlocked screen</strong>
+        <div class="why">Anyone walking by can view open patient records. Lock your screen (Win+L) any time you step away, even for a minute.</div>
+      </div>
+      <div class="scenario-card" onclick="revealScenario(this)">
+        <strong>🗣️ Hallway conversation</strong>
+        <div class="why">Discussing a patient's condition where others can overhear is a Privacy Rule violation, even without using their name.</div>
+      </div>
+      <div class="scenario-card" onclick="revealScenario(this)">
+        <strong>📱 Texting patient details</strong>
+        <div class="why">Standard text messages aren't encrypted. Use the practice's secure messaging system instead.</div>
+      </div>
+      <div class="scenario-card" onclick="revealScenario(this)">
+        <strong>📧 Suspicious "verification" email</strong>
+        <div class="why">Phishing emails often impersonate insurers to steal login credentials. Verify by phone before clicking any link.</div>
+      </div>
+    </div>
+    <p class="note" id="scenarioNote">Tap all four cards to continue.</p>
+    <div class="btn-row"><button id="toScreen4" onclick="goTo(4)" disabled>Next</button></div>
+  </div>
+
+  <!-- Screen 4: What To Do -->
+  <div class="screen" data-screen="4">
+    <h2>If You Suspect a Breach</h2>
+    <p class="lead">If you think patient information may have been exposed — even if you're not sure — the first step is always the same:</p>
+    <ul class="steps">
+      <li>Notice something that seems wrong</li>
+      <li><strong>Tell your Privacy Officer immediately</strong></li>
+      <li>The Officer investigates and handles next steps</li>
+    </ul>
+    <p class="note">You will not be punished for reporting a possible mistake. Reporting early is always the right call.</p>
+    <div class="btn-row"><button onclick="goTo(5)">Take the Knowledge Check</button></div>
+  </div>
+
+  <!-- Screen 5: Knowledge Check -->
+  <div class="screen" data-screen="5">
+    <h2>Knowledge Check</h2>
+    <p class="lead">A coworker asks you to text her a patient's test results because she's running late. What do you do?</p>
+    <div class="quiz-options">
+      <button class="quiz-option" onclick="answerQuiz(this, false)">Text it — it's faster and she needs it now</button>
+      <button class="quiz-option" onclick="answerQuiz(this, true)">Tell her to check the secure patient portal instead</button>
+      <button class="quiz-option" onclick="answerQuiz(this, false)">Ignore the request and say nothing</button>
+    </div>
+    <div class="feedback" id="quizFeedback"></div>
+    <div class="btn-row"><button id="toScreen6" onclick="goTo(6)" style="display:none;">Finish</button></div>
+  </div>
+
+  <!-- Screen 6: Completion -->
+  <div class="screen" data-screen="6">
+    <div class="completion-icon">✅</div>
+    <h2 style="text-align:center;">Training Complete</h2>
+    <p class="lead" style="text-align:center;">You've completed the HIPAA Security Awareness module. Thanks for helping keep patient information safe.</p>
+    <p class="lead" style="text-align:center;"><strong>Was this useful?</strong></p>
+    <div class="btn-row" style="justify-content:center;">
+      <button onclick="thankYou(this)">Yes</button>
+      <button class="secondary" onclick="thankYou(this)">No</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const totalScreens = 6;
+  function goTo(n) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelector(`.screen[data-screen="${n}"]`).classList.add('active');
+    document.getElementById('progressFill').style.width = `${(n/totalScreens)*100}%`;
+    window.scrollTo(0,0);
+  }
+
+  let revealedCount = 0;
+  function revealScenario(card) {
+    if (!card.classList.contains('revealed')) {
+      card.classList.add('revealed');
+      revealedCount++;
+      if (revealedCount >= 4) {
+        document.getElementById('toScreen4').disabled = false;
+        document.getElementById('scenarioNote').textContent = 'All scenarios reviewed — nice work.';
+      }
+    }
+  }
+
+  function answerQuiz(btn, isCorrect) {
+    document.querySelectorAll('.quiz-option').forEach(b => b.disabled = true);
+    const fb = document.getElementById('quizFeedback');
+    if (isCorrect) {
+      btn.classList.add('correct');
+      fb.innerHTML = '<strong>Correct.</strong> Standard text messages aren’t encrypted, so they don’t meet the Technical Safeguard requirement for transmitting patient information. The secure patient portal is built to protect this exact type of data.';
+    } else {
+      btn.classList.add('incorrect');
+      document.querySelectorAll('.quiz-option')[1].classList.add('correct');
+      fb.innerHTML = '<strong>Not quite.</strong> Standard text messages aren’t encrypted — sending patient data this way is a Technical Safeguard violation, even between coworkers. The secure patient portal is the correct channel.';
+    }
+    fb.classList.add('show');
+    document.getElementById('toScreen6').style.display = 'inline-block';
+  }
+
+  function thankYou(btn) {
+    document.querySelector('.module').innerHTML = '<div class="screen active" style="text-align:center; padding:60px 28px;"><div class="completion-icon">🙏</div><h2>Thanks for your feedback</h2><p class="lead">This module is a portfolio sample built by Anel Henning.</p></div>';
+  }
+</script>
+</body>
+</html>
