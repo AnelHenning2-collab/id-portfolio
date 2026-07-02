@@ -29,6 +29,9 @@ A true microlearning piece — 3 screens, under 3 minutes — demonstrating desi
 
 **[View live module →](https://anelhenning2-collab.github.io/id-portfolio/05-phishing-microlearning/module.html)**
 
+### 6. [Transforming Policies into Engaging Training: Instructional Design for Cybersecurity Pros](./06-rise360-cybersecurity-policy-training/)
+A 4-lesson course plus scored quiz built in **Articulate Rise 360** (an industry-standard authoring tool), covering instructional design models, adult learning principles, and graphic design techniques applied to cybersecurity policy training.
+
 ---
 
 ## About
