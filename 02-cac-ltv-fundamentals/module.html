@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAC & LTV Fundamentals</title>
+<link rel="stylesheet" href="../shared/style.css">
+</head>
+<body>
+<div class="module">
+  <div class="header"><h1>Understanding CAC &amp; LTV</h1></div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:16%"></div></div>
+
+  <div class="screen active" data-screen="1">
+    <h2>Quick Question</h2>
+    <p class="lead">A local coffee shop spends $200 on Instagram ads and gets 10 new customers.</p>
+    <p class="lead"><strong>Did that work out?</strong></p>
+    <div class="btn-row">
+      <button onclick="goTo(2)">Sounds good</button>
+      <button class="secondary" onclick="goTo(2)">Not enough info</button>
+    </div>
+  </div>
+
+  <div class="screen" data-screen="2">
+    <h2>Customer Acquisition Cost (CAC)</h2>
+    <p class="lead">That's <strong>Customer Acquisition Cost (CAC)</strong> — what you spend, on average, to gain one new customer.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="num">$200</div><div class="lbl">Ad Spend</div></div>
+      <div class="stat-box"><div class="num">÷ 10</div><div class="lbl">New Customers</div></div>
+      <div class="stat-box"><div class="num">$20</div><div class="lbl">= CAC</div></div>
+    </div>
+    <div class="btn-row"><button onclick="goTo(3)">Next</button></div>
+  </div>
+
+  <div class="screen" data-screen="3">
+    <h2>Try It Yourself</h2>
+    <p class="lead">Enter a campaign's spend and new customer count to calculate CAC.</p>
+    <div class="calc-row">
+      <div>
+        <label>Total Spend ($)<br><input type="number" id="spendInput" placeholder="e.g. 500"></label>
+      </div>
+      <div>
+        <label>New Customers<br><input type="number" id="customersInput" placeholder="e.g. 25"></label>
+      </div>
+    </div>
+    <div class="btn-row"><button onclick="calcCAC()">Calculate CAC</button></div>
+    <div class="calc-result" id="calcResult"></div>
+    <div class="btn-row"><button id="toScreen4" onclick="goTo(4)" disabled>Next</button></div>
+  </div>
+
+  <div class="screen" data-screen="4">
+    <h2>CAC Needs a Partner: LTV</h2>
+    <p class="lead">CAC alone doesn't tell you if that number is a good deal. You also need <strong>Lifetime Value (LTV)</strong> — what a customer is worth over time. A healthy business generally wants LTV to be <strong>3x or more</strong> than CAC.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="num">$20</div><div class="lbl">CAC</div></div>
+      <div class="stat-box"><div class="num">$80</div><div class="lbl">LTV</div></div>
+      <div class="stat-box"><div class="num">4:1</div><div class="lbl">Healthy Ratio ✓</div></div>
+    </div>
+    <div class="btn-row"><button onclick="goTo(5)">Knowledge Check</button></div>
+  </div>
+
+  <div class="screen" data-screen="5">
+    <h2>Knowledge Check</h2>
+    <p class="lead">A campaign has a CAC of $50 and an LTV of $60. Is this campaign healthy?</p>
+    <div class="quiz-options" id="quizOptions">
+      <button class="quiz-option">Yes — LTV is higher than CAC, so it's profitable</button>
+      <button class="quiz-option">No — the ratio (1.2:1) is far below the healthy 3:1 target</button>
+      <button class="quiz-option">Can't tell without knowing the ad platform</button>
+    </div>
+    <div class="feedback" id="quizFeedback"></div>
+    <div class="btn-row"><button id="toScreen6" onclick="goTo(6)" style="display:none;">Finish</button></div>
+  </div>
+
+  <div class="screen" data-screen="6">
+    <div class="completion-icon">✅</div>
+    <h2 style="text-align:center;">Module Complete</h2>
+    <p class="lead" style="text-align:center;">You can now calculate and interpret CAC relative to LTV.</p>
+    <p class="lead" style="text-align:center;"><strong>Was this useful?</strong></p>
+    <div class="btn-row" style="justify-content:center;">
+      <button onclick="showThankYou('This module is a portfolio sample built by Anel Henning.')">Yes</button>
+      <button class="secondary" onclick="showThankYou('This module is a portfolio sample built by Anel Henning.')">No</button>
+    </div>
+  </div>
+</div>
+
+<script src="../shared/module.js"></script>
+<script>
+  function calcCAC() {
+    const spend = parseFloat(document.getElementById('spendInput').value);
+    const customers = parseFloat(document.getElementById('customersInput').value);
+    const result = document.getElementById('calcResult');
+    if (!spend || !customers) {
+      result.innerHTML = 'Enter both a spend amount and a customer count.';
+      result.classList.add('show');
+      return;
+    }
+    const cac = (spend / customers).toFixed(2);
+    result.innerHTML = `Your CAC is <strong>$${cac}</strong> per customer ($${spend} ÷ ${customers} customers).`;
+    result.classList.add('show');
+    document.getElementById('toScreen4').disabled = false;
+  }
+
+  makeQuiz('#quizOptions .quiz-option', {
+    correctIndex: 1,
+    feedbackId: 'quizFeedback',
+    nextBtnId: 'toScreen6',
+    correctFeedback: '<strong>Correct.</strong> A 1.2:1 ratio means this campaign barely breaks even before accounting for overhead, support, and other costs — well short of the 3:1 target.',
+    incorrectFeedback: '<strong>Not quite.</strong> LTV being higher than CAC isn’t enough on its own — a 1.2:1 ratio is far below the healthy 3:1 target once you factor in overhead and support costs.'
+  });
+</script>
+</body>
+</html>
